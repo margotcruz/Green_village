@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: Afpa1234
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - projet_green_village_default
+
+  web:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www
+    networks:
+      - projet_green_village_default
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: always
+    ports:
+      - "1020:1025" 
+      - "8020:8025"  
+    networks:
+      - projet_green_village_default
+
+networks:
+  projet_green_village_default:
+    external: true
+
+volumes:
+  db-data:
