@@ -39,16 +39,14 @@ class Produit
     private Fournisseur $fournisseur;
 
     #[ORM\ManyToOne(targetEntity: Rubrique::class)]
-    #[ORM\JoinColumn(name: 'Id_rubrique', referencedColumnName: 'Id_rubrique')]
+    #[ORM\JoinColumn(name: 'Id_parent', referencedColumnName: 'Id_rubrique')]
     private Rubrique $rubrique;
 
-    // Getter for Id
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    // Getter and setter for libelleCourt
     public function getLibelleCourt(): string
     {
         return $this->libelleCourt;
@@ -60,7 +58,6 @@ class Produit
         return $this;
     }
 
-    // Getter and setter for descriptionLong
     public function getDescriptionLong(): string
     {
         return $this->descriptionLong;
@@ -72,7 +69,6 @@ class Produit
         return $this;
     }
 
-    // Getter and setter for prixAchatHt
     public function getPrixAchatHt(): float
     {
         return $this->prixAchatHt;
@@ -84,7 +80,6 @@ class Produit
         return $this;
     }
 
-    // Getter and setter for statutProduit
     public function getStatutProduit(): ?bool
     {
         return $this->statutProduit;
@@ -96,7 +91,6 @@ class Produit
         return $this;
     }
 
-    // Getter and setter for stockProduit
     public function getStockProduit(): ?string
     {
         return $this->stockProduit;
@@ -151,6 +145,11 @@ class Produit
     public function getRubrique(): Rubrique
     {
         return $this->rubrique;
+    }
+
+    public function getIdParent(): ?int
+    {
+        return $this->rubrique ? $this->rubrique->getId() : null;
     }
 
     public function setRubrique(Rubrique $rubrique): self

@@ -33,7 +33,6 @@ class AppFixtures extends Fixture
         $fournisseurs = [];
         $services = [];
 
-        // Création des rôles
         $roles = [
             ['nom' => 'Commercial', 'niveau' => 'niveau_4'],
             ['nom' => 'Manager', 'niveau' => 'niveau_2'],
@@ -152,10 +151,9 @@ class AppFixtures extends Fixture
             'Instruments à percussion',
             'Instruments électroniques'
         ];
-
-        // Tableau pour stocker les objets Rubrique créés
+        
         $rubriqueObjects = [];
-
+        
         foreach ($rubriques as $rubriqueName) {
             $rubrique = new Rubrique();
             $rubrique->setLabelRubrique($rubriqueName);
@@ -163,74 +161,61 @@ class AppFixtures extends Fixture
             $manager->persist($rubrique);
             $rubriqueObjects[] = $rubrique;
         }
-
-        // Création des sous-rubriques
+        
         $sousRubriques = [
-            'Guitares' => $rubriqueObjects[0],   // Instruments à cordes
-            'Violons' => $rubriqueObjects[0],    // Instruments à cordes
-            'Flûtes' => $rubriqueObjects[1],     // Instruments à vent
-            'Trombones' => $rubriqueObjects[1],  // Instruments à vent
-            'Batteries' => $rubriqueObjects[2],  // Instruments à percussion
-            'Synthétiseurs' => $rubriqueObjects[3] // Instruments électroniques
+            'Guitares' => $rubriqueObjects[0],
+            'Violons' => $rubriqueObjects[0],
+            'Flûtes' => $rubriqueObjects[1],
+            'Trombones' => $rubriqueObjects[1],
+            'Batteries' => $rubriqueObjects[2],
+            'Synthétiseurs' => $rubriqueObjects[3]
         ];
-
+        
+        $sousRubriqueObjects = [];
+        
         foreach ($sousRubriques as $sousRubriqueName => $parentRubrique) {
             $sousRubrique = new Rubrique();
             $sousRubrique->setLabelRubrique($sousRubriqueName);
             $sousRubrique->setLibelleImage($faker->word());
             $sousRubrique->setParentRubrique($parentRubrique);
             $manager->persist($sousRubrique);
+            $sousRubriqueObjects[$sousRubriqueName] = $sousRubrique;
         }
-
         
         $produits = [
-            ['libelleCourt' => 'Guitare électrique', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 120.50, 'rubrique' => $rubriqueObjects[0], 'marque' => 'Fender'],
-            ['libelleCourt' => 'Guitare acoustique', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 150.75, 'rubrique' => $rubriqueObjects[0], 'marque' => 'Gibson'],
-            ['libelleCourt' => 'Violon', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 200.00, 'rubrique' => $rubriqueObjects[0], 'marque' => 'Stradivarius'],
-            ['libelleCourt' => 'Flûte traversière', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 95.30, 'rubrique' => $rubriqueObjects[1], 'marque' => 'Yamaha'],
-            ['libelleCourt' => 'Trombone', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 130.00, 'rubrique' => $rubriqueObjects[1], 'marque' =>'Yamaha'],
-            ['libelleCourt' => 'Batterie acoustique', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 800.00, 'rubrique' => $rubriqueObjects[2], 'marque' => 'Pearl'],
-            ['libelleCourt' => 'Piano numérique', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 500.00, 'rubrique' => $rubriqueObjects[3], 'marque' => 'Yamaha'],
-            ['libelleCourt' => 'Synthétiseur', 'descriptionLong' => $faker->paragraph(), 'prixAchatHt' => 350.00, 'rubrique' => $rubriqueObjects[3], 'marque' =>'Yamaha']
+            ['libelleCourt' => 'Guitare électrique', 'rubrique' => $sousRubriqueObjects['Guitares'], 'marque' => 'Fender'],
+            ['libelleCourt' => 'Guitare acoustique', 'rubrique' => $sousRubriqueObjects['Guitares'], 'marque' => 'Gibson'],
+            ['libelleCourt' => 'Violon', 'rubrique' => $sousRubriqueObjects['Violons'], 'marque' => 'Stradivarius'],
+            ['libelleCourt' => 'Flûte traversière', 'rubrique' => $sousRubriqueObjects['Flûtes'], 'marque' => 'Yamaha'],
+            ['libelleCourt' => 'Trombone', 'rubrique' => $sousRubriqueObjects['Trombones'], 'marque' => 'Yamaha'],
+            ['libelleCourt' => 'Batterie acoustique', 'rubrique' => $sousRubriqueObjects['Batteries'], 'marque' => 'Pearl'],
+            ['libelleCourt' => 'Synthétiseur', 'rubrique' => $sousRubriqueObjects['Synthétiseurs'], 'marque' => 'Yamaha']
         ];
         
         foreach ($produits as $produitData) {
             $produit = new Produit();
             $produit->setLibelleCourt($produitData['libelleCourt']);
-            $produit->setDescriptionLong($produitData['descriptionLong']);
-            $produit->setPrixAchatHt($produitData['prixAchatHt']);
+            $produit->setDescriptionLong($faker->paragraph());
+            $produit->setPrixAchatHt($faker->randomFloat(2, 50, 1000));
             $produit->setMarque($produitData['marque']);
-            
-            $stock = $faker->numberBetween(0, 50);
-            $produit->setStockProduit($stock);
-        
-            if ($stock > 0) {
-                $produit->setStatutProduit(true);  
-            } else {
-                $produit->setStatutProduit(false);  
-            }
-        
+            $produit->setStockProduit($faker->numberBetween(0, 50));
             $produit->setLibelleModele($faker->word());
-        
-            $fournisseur = $faker->randomElement($fournisseurs);
-            $produit->setFournisseur($fournisseur);
-        
             $produit->setRubrique($produitData['rubrique']);
+            $produit->setFournisseur($faker->randomElement($fournisseurs));
         
             $manager->persist($produit);
         }
         
         $produitRepository = $manager->getRepository(Produit::class);
         $produits = $produitRepository->findAll();
-
+        
         foreach ($produits as $produit) {
             $nombreImages = $faker->numberBetween(1, 3);
-
+        
             for ($i = 0; $i < $nombreImages; $i++) {
                 $imageProduit = new ImageProduit();
-                $imageProduit->setLibelleImage($faker->unique()->lexify('image-?????.jpg')); 
+                $imageProduit->setLibelleImage($faker->unique()->lexify('image-?????.jpg'));
                 $imageProduit->setProduit($produit);
-
                 $manager->persist($imageProduit);
             }
         }

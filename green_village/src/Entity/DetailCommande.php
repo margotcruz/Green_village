@@ -32,5 +32,4 @@ class DetailCommande
         return null;
     }
 
-    // Getters and setters
 }

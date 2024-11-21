@@ -1,4 +1,4 @@
-version: '3.7'
+
 
 services:
   db:
@@ -9,8 +9,8 @@ services:
       - ./data:/var/lib/mysql
     ports:
       - "3307:3306"
-    networks:
-      - projet_green_village_default
+    # networks:
+    #   - projet_green_village_default
 
   web:
     build: .
@@ -18,8 +18,8 @@ services:
       - "80:80"
     volumes:
       - .:/var/www
-    networks:
-      - projet_green_village_default
+    # networks:
+    #   - projet_green_village_default
 
   mailhog:
     image: mailhog/mailhog:latest
@@ -27,12 +27,18 @@ services:
     ports:
       - "1020:1025" 
       - "8020:8025"  
-    networks:
-      - projet_green_village_default
+    # networks:
+    #   - projet_green_village_default
 
-networks:
-  projet_green_village_default:
-    external: true
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+    ports:
+      - 8081:80
+# networks:
+#   projet_green_village_default:
+#     external: true
 
 volumes:
   db-data:

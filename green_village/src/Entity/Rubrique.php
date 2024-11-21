@@ -1,6 +1,5 @@
 <?php
 
-// src/Entity/Rubrique.php
 
 namespace App\Entity;
 
@@ -22,7 +21,7 @@ class Rubrique
     private string $labelRubrique;
 
     #[ORM\ManyToOne(targetEntity: Rubrique::class)]
-    #[ORM\JoinColumn(name: 'Id_rubrique_id_sous_rubrique', referencedColumnName: 'Id_rubrique')]
+    #[ORM\JoinColumn(name: 'Id_parent', referencedColumnName: 'Id_rubrique')]
     private ?Rubrique $parentRubrique = null;
 
     public function getId(): ?int
