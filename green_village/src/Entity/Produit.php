@@ -39,8 +39,8 @@ class Produit
     private Fournisseur $fournisseur;
 
     #[ORM\ManyToOne(targetEntity: Rubrique::class)]
-    #[ORM\JoinColumn(name: 'Id_parent', referencedColumnName: 'Id_rubrique')]
-    private Rubrique $rubrique;
+    #[ORM\JoinColumn(name: 'Id_rubrique', referencedColumnName: 'Id_rubrique')]
+    private ?Rubrique $rubrique = null;
 
     public function getId(): ?int
     {
@@ -147,7 +147,7 @@ class Produit
         return $this->rubrique;
     }
 
-    public function getIdParent(): ?int
+    public function getIdRubrique(): ?int
     {
         return $this->rubrique ? $this->rubrique->getId() : null;
     }
