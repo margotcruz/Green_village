@@ -1,0 +1,60 @@
+{% block body %}
+
+ <ul class="dropdown-menu mega-menu p-0 m-0" aria-labelledby="dropdownMenuButton">
+        <div class="d-flex flex-wrap mx-5 justify-content-around flex-row-reverse">
+          <li class="mega-menu-column custom-menu">
+            <ul>
+              <li class="nav-header mb-2 mx-3">Rubriques</li>
+              {% for rubrique in rubriques %}
+              {% if rubrique.parentRubrique is null %}
+              <li>
+                <a href="{{ path('app_rubrique_show', { id: rubrique.id }) }}" class="dropdown-link">
+                  <span>{{ rubrique.labelRubrique }}</span>
+                </a>
+              </li>
+              {% endif %}
+              {% endfor %}
+
+              <li>
+                <a href="{{ path('app_rubrique_index') }}" class="dropdown-link">
+                  <span>Découvrez nos rubriques</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="mega-menu-column custom-menu" id="li">
+            <ul>
+              <li class="nav-header mb-2 mx-3">Sous rubriques</li>
+              {% set rubriques = rubriques %}
+              {% for rubrique in rubriques %}
+              {% if rubrique.parentRubrique is not null %}
+              <li>
+                <a href="{{ path('app_rubrique_show', { id: rubrique.id }) }}" class="dropdown-link">
+                  <span>{{ rubrique.labelRubrique }}</span>
+                </a>
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+
+          <li class="mega-menu-column custom-menu">
+            <ul>
+              <li class="nav-header mb-2 mx-3">Menu</li>
+              <li>
+                <a href="#" class="dropdown-link">Panier</a>
+              </li>
+              <li>
+                <a href="{{ path('app_produit_index')}}" class="dropdown-link">Tous nos produits</a>
+              </li>
+              <li>
+                <a href="#" class="dropdown-link">Nous contacter</a>
+              </li>
+            </ul>
+          </li>
+        </div>
+      </ul>
+<!-- dropdown-menu -->
+</li>
+{% endblock %}

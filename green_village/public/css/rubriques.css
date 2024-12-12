@@ -1,0 +1,73 @@
+/* Styles généraux */
+body {
+    background-color: #f5efe6; /* Fond beige clair */
+    color: #6A645A; /* Texte gris foncé */
+    font-family: Arial, sans-serif; /* Police de base */
+  }
+  
+  .container {
+    margin-top: 40px; /* Espacement supérieur pour le conteneur */
+  }
+  
+  .navTitre {
+    font-size: 2rem; /* Taille de police pour le titre principal */
+    font-weight: bold; /* Gras pour le titre */
+    color: #BDA18A; /* Couleur marron clair */
+  }
+  
+  .card {
+    background-color: #D5CABC; /* Fond beige doux pour les cartes */
+    border: none; /* Pas de bordure */
+    border-radius: 8px; /* Coins arrondis */
+    transition: transform 0.3s ease; /* Transition douce pour l'effet de survol */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Agrandissement au survol */
+  }
+  
+  .card-header {
+    background-color: #C49D83; /* Fond marron doux pour l'en-tête de la carte */
+    border-top-left-radius: 8px; /* Coins arrondis pour l'en-tête */
+    border-top-right-radius: 8px; /* Coins arrondis pour l'en-tête */
+  }
+  
+  .card-header img {
+    width: 80px; /* Largeur de l'image */
+    height: 80px; /* Hauteur de l'image */
+  }
+  
+  .card-body {
+    padding: 15px; /* Espacement interne pour le corps de la carte */
+  }
+  
+  .list-group {
+    margin-top: 10px; /* Espacement supérieur pour la liste des sous-rubriques */
+  }
+  
+  .list-group-item {
+    background-color: #fff; /* Fond blanc pour les éléments de la liste */
+    border: 1px solid #D5CABC; /* Bordure beige doux */
+    border-radius: 5px; /* Coins arrondis */
+    transition: background-color 0.3s ease; /* Transition douce pour l'effet de survol */
+  }
+  
+  .list-group-item:hover {
+    background-color: #E8D5CC; /* Fond beige clair au survol */
+  }
+  
+  .list-group-item img {
+    width: 40px; /* Largeur de l'image des sous-rubriques */
+    height: 40px; /* Hauteur de l'image des sous-rubriques */
+  }
+  
+  .text-muted {
+    color: #A9A9A9; /* Couleur grise pour le texte muet */
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .navTitre {
+      font-size: 1.5rem; /* Réduit la taille du titre sur les petits écrans */
+    }
+  }

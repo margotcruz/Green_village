@@ -1,0 +1,240 @@
+
+.container {
+    margin-top: 40px; /* Espacement supérieur pour le conteneur */
+}
+
+.rubrique-title {
+    font-size: 1.8rem; /* Taille de police pour le titre de la rubrique */
+    font-weight: bold; /* Gras pour le titre */
+    color: #BDA18A; /* Couleur marron clair */
+    margin-bottom: 20px; /* Espacement inférieur */
+}
+
+.card {
+    background-color: #D5CABC; /* Fond beige doux pour les cartes */
+    border: none; /* Pas de bordure */
+    border-radius: 8px; /* Coins arrondis */
+    transition: transform 0.3s ease; /* Transition douce pour l'effet de survol */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Agrandissement au survol */
+}
+
+.card-img-top {
+    height: 200px; /* Hauteur fixe pour les images */
+    object-fit: cover; /* Couvre l'espace sans déformer l'image */
+}
+
+.card-title {
+    font-size: 1.25rem; /* Taille de police pour le titre du produit */
+    color: #C49D83; /* Couleur marron doux */
+}
+
+.card-text {
+    font-size: 0.9rem; /* Taille de police pour le texte du produit */
+}
+
+.btn-primary {
+    background-color: #C49D83; /* Couleur de fond du bouton */
+    border: none; /* Pas de bordure */
+}
+
+.btn-primary:hover {
+    background-color: #BDA18A; /* Couleur de fond au survol */
+}
+
+/* Alertes */
+.alert {
+    background-color: #E8D5CC; /* Fond beige clair pour les alertes */
+    color: #6A645A; /* Texte gris foncé */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rubrique-title {
+        font-size: 1.5rem; /* Réduit la taille du titre sur les petits écrans */
+    }
+}
+
+
+
+/* ----------------------------------------------------------- */
+:root {
+    --color-light-beige: #f5efe6;
+    --color-light-gray: #D5CABC;
+    --color-soft-pink: #E8D5CC;
+    --color-dark-beige: #BDA18A;
+    --color-warm-brown: #C49D83;
+}
+
+.product-slider { 
+    padding: 45px;
+    background-color: var(--color-light-beige); /* Arrière-plan beige clair */
+}
+
+.product-slider #carousel { 
+    margin: 0; 
+}
+
+.product-slider #thumbcarousel { 
+    margin: 12px 0 0; 
+    padding: 0 45px; 
+}
+
+.product-slider #thumbcarousel .carousel-inner { 
+    display: flex;
+}
+
+.product-slider #thumbcarousel .carousel-item { 
+    text-align: center; 
+}
+
+.product-slider #thumbcarousel .thumb { 
+    border: 4px solid #C49D83; 
+    width: 20%; 
+    margin: 0 2%; 
+    display: inline-block; 
+    vertical-align: middle; 
+    cursor: pointer; 
+    max-width: 98px;
+}
+
+.product-slider #thumbcarousel .thumb img { 
+    max-height: 80px; 
+    object-fit: cover;
+}
+
+.product-slider .item img { 
+    width: 100%; 
+    height: auto; 
+}
+
+.carousel-control-prev, 
+.carousel-control-next {  
+    visibility: hidden;
+}
+
+.carousel-control-prev-icon
+
+.carousel-control-prev:hover, 
+.carousel-control-next:hover { 
+    color: #333; 
+}
+
+.carousel-control-prev-icon, 
+.carousel-control-next-icon {
+    filter: invert(100%);
+}
+
+.carousel-control-prev, 
+.carousel-control-next { 
+    font-size: 20px; 
+    line-height: 30px; 
+    top: 30%; 
+}
+
+.carousel-control-prev, 
+.carousel-control-next { 
+    background-color: rgba(0, 0, 0, 0); 
+    border: none; 
+}
+
+.carousel-caption { 
+    display: none; 
+}
+
+.product-slider .thumb:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.product-title {
+    color: var(--color-dark-beige); /* Titre du produit */
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.product-details {
+    background-color: var(--color-light-beige); /* Fond léger */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet moderne */
+}
+
+.product-details h2 {
+    font-size: 1.8em;
+    color: var(--color-dark-beige);
+    margin-bottom: 20px;
+}
+
+.product-specifications {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.spec-item {
+    flex: 1 1 45%; 
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.spec-item strong {
+    color: var(--color-warm-brown);
+}
+
+.spec-item span {
+    display: block;
+    color: var(--color-dark-beige);
+}
+
+.price-item {
+    text-align: right; 
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.price {
+    color: var(--color-warm-brown);
+    font-size: 1.5em;
+    margin-right: 2%;
+}
+
+.additional-specifications {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.additional-specifications li {
+    font-size: 1.1em;
+    color: var(--color-dark-beige);
+    margin-bottom: 8px;
+}
+
+.product-navigation {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.product-navigation .btn {
+    background-color: var(--color-light-gray);
+    border-color: var(--color-dark-beige);
+    color: black;
+    width: 18%;
+}
+
+.product-navigation .btn:hover {
+    background-color: var(--color-dark-beige);
+    border-color: var(--color-warm-brown);
+    color: #fff;
+}
+
+h3 {
+    color: var(--color-dark-beige); 
+}
+
+
+

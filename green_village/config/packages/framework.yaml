@@ -8,6 +8,7 @@ framework:
 
     #esi: true
     #fragments: true
+    fragments: { path: /_fragment }
 
 when@test:
     framework:

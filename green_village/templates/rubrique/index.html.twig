@@ -1,37 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Rubrique index{% endblock %}
+{% block title %}Catalogue des Rubriques{% endblock %}
 
 {% block body %}
-    <h1>Rubrique index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>LibelleImage</th>
-                <th>LabelRubrique</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for rubrique in rubriques %}
-            <tr>
-                <td>{{ rubrique.id }}</td>
-                <td>{{ rubrique.libelleImage }}</td>
-                <td>{{ rubrique.labelRubrique }}</td>
-                <td>
-                    <a href="{{ path('app_rubrique_show', {'id': rubrique.id}) }}">show</a>
-                    <a href="{{ path('app_rubrique_edit', {'id': rubrique.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_rubrique_new') }}">Create new</a>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4 navTitre">Explorez Nos Rubriques et Sous-Rubriques</h1>
+
+        <div class="row">
+            {% for rubrique in rubriques %}
+                {% if rubrique.parentRubrique is null %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header text-center">
+                                <img src="{{ asset('images/rubriques/' ~ rubrique.libelleImage) }}" class="rounded-circle mb-2" style="width: 80px; height: 80px;" alt="Image de {{ rubrique.labelRubrique }}">
+                                <h5 class="mb-0">{{ rubrique.labelRubrique }}</h5>
+                            </div>
+                            <div class="card-body">
+                                {% set sousRubriques = rubriques|filter(r => r.parentRubrique and r.parentRubrique.id == rubrique.id) %}
+                                {% if sousRubriques is not empty %}
+                                    <div class="list-group">
+                                        {% for sousRubrique in sousRubriques %}
+                                            <a href="{{ path('app_rubrique_show', {'id': sousRubrique.id}) }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                                <img src="{{ asset('images/rubriques/' ~ sousRubrique.libelleImage) }}" class="me-3 rounded" style="width: 40px; height: 40px;" alt="Image de {{ sousRubrique.labelRubrique }}">
+                                                {{ sousRubrique.labelRubrique }}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p class="text-muted text-center">Aucune sous-rubrique disponible.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

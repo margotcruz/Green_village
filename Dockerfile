@@ -34,4 +34,10 @@ COPY apache.conf /etc/apache2/sites-enabled/000-default.conf
 # Définir le répertoire de travail
 WORKDIR /var/www
 
-# install nmp
+
+# Install nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash \
+    && export NVM_DIR="/root/.nvm" \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
+    && nvm install 22
+

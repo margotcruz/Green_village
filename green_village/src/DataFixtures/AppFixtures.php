@@ -73,9 +73,9 @@ class AppFixtures extends Fixture
             'Constructeur',
             'Importateur'
         ];
-        
+
         $fournisseurType = $faker->randomElement($fournisseurType);
-        
+
         for ($i = 0; $i < 5; $i++) {
             $fournisseur = new Fournisseur();
             $fournisseur->setNomFournisseur($faker->company());
@@ -87,7 +87,7 @@ class AppFixtures extends Fixture
             $manager->persist($fournisseur);
             $fournisseurs[] = $fournisseur;
         }
-        
+
 
         for ($i = 0; $i < 25; $i++) {
             $adresse = new Adresse();
@@ -146,83 +146,267 @@ class AppFixtures extends Fixture
         }
 
         $rubriques = [
-            'Instruments à cordes',
-            'Instruments à vent',
-            'Instruments à percussion',
-            'Instruments électroniques'
+            'Instruments à cordes' => 'instrumentacordes.png',
+            'Instruments à vent' => 'instrumentavent.png',
+            'Instruments à percussion' => 'instrumentapercussion.png',
+            'Instruments électroniques' => 'instrumenteclectronique.png',
         ];
-        
+
         $rubriqueObjects = [];
-        
-        foreach ($rubriques as $rubriqueName) {
+
+        foreach ($rubriques as $rubriqueName => $imageFileName) {
             $rubrique = new Rubrique();
             $rubrique->setLabelRubrique($rubriqueName);
-            $rubrique->setLibelleImage($faker->word());
+            $rubrique->setLibelleImage($imageFileName);
             $manager->persist($rubrique);
             $rubriqueObjects[] = $rubrique;
         }
-        
+
+
         $sousRubriques = [
-            'Guitares' => $rubriqueObjects[0],
-            'Violons' => $rubriqueObjects[0],
-            'Flûtes' => $rubriqueObjects[1],
-            'Trombones' => $rubriqueObjects[1],
-            'Batteries' => $rubriqueObjects[2],
-            'Synthétiseurs' => $rubriqueObjects[3]
+            'Guitares' => ['parent' => $rubriqueObjects[0], 'image' => 'guitares.png'],
+            'Violons' => ['parent' => $rubriqueObjects[0], 'image' => 'violons.png'],
+            'Flûtes' => ['parent' => $rubriqueObjects[1], 'image' => 'flutes.png'],
+            'Trombones' => ['parent' => $rubriqueObjects[1], 'image' => 'trombones.png'],
+            'Batteries' => ['parent' => $rubriqueObjects[2], 'image' => 'batteries.png'],
+            'Synthétiseurs' => ['parent' => $rubriqueObjects[3], 'image' => 'synthetiseurs.png']
         ];
-        
+
         $sousRubriqueObjects = [];
-        
-        foreach ($sousRubriques as $sousRubriqueName => $parentRubrique) {
+
+        foreach ($sousRubriques as $sousRubriqueName => $data) {
             $sousRubrique = new Rubrique();
             $sousRubrique->setLabelRubrique($sousRubriqueName);
-            $sousRubrique->setLibelleImage($faker->word());
-            $sousRubrique->setParentRubrique($parentRubrique);
+            $sousRubrique->setLibelleImage($data['image']); 
+            $sousRubrique->setParentRubrique($data['parent']);
             $manager->persist($sousRubrique);
             $sousRubriqueObjects[$sousRubriqueName] = $sousRubrique;
         }
-        
+
+
         $produits = [
-            ['libelleCourt' => 'Guitare électrique', 'rubrique' => $sousRubriqueObjects['Guitares'], 'marque' => 'Fender'],
-            ['libelleCourt' => 'Guitare acoustique', 'rubrique' => $sousRubriqueObjects['Guitares'], 'marque' => 'Gibson'],
-            ['libelleCourt' => 'Violon', 'rubrique' => $sousRubriqueObjects['Violons'], 'marque' => 'Stradivarius'],
-            ['libelleCourt' => 'Flûte traversière', 'rubrique' => $sousRubriqueObjects['Flûtes'], 'marque' => 'Yamaha'],
-            ['libelleCourt' => 'Trombone', 'rubrique' => $sousRubriqueObjects['Trombones'], 'marque' => 'Yamaha'],
-            ['libelleCourt' => 'Batterie acoustique', 'rubrique' => $sousRubriqueObjects['Batteries'], 'marque' => 'Pearl'],
-            ['libelleCourt' => 'Synthétiseur', 'rubrique' => $sousRubriqueObjects['Synthétiseurs'], 'marque' => 'Yamaha']
+            [
+                'libelleCourt' => 'Harley Benton ST-20 BK Standard Series',
+                'prix' => '880',
+                'rubrique' => $sousRubriqueObjects['Guitares'],
+                'marque' => 'Harley Benton',
+                'libelleModele' => 'ST-20 BK Standard Series',
+                'caracteristique' => [
+                    'Corps' => 'Peuplier',
+                    'Manche' => 'Erable',
+                    'Touche' => 'Roseacer',
+                    'Repères' => 'Points',
+                    'Profil du manche' => 'Modern C',
+                    'Rayon de la touche' => '305 mm',
+                    'Frettes' => '22',
+                    'Diapason' => '648 mm',
+                    'Largeur au sillet' => '42 mm',
+                    'Barre de réglage (Truss Rod)' => 'Double action',
+                    'Micros' => '3 micros simple bobinage style ST',
+                    'Réglages' => '1 réglage de volume, 2 réglages de tonalité',
+                    'Sélecteur' => '5 positions',
+                    'Accastillage' => 'Chromé',
+                    'Vibrato' => 'Synchronisé',
+                    'Mécaniques' => 'Fermées',
+                    'Cordes' => '.009-.042',
+                    'Couleur' => 'Noir haute brillance',
+                ],
+                'images' => [ 
+                    'HarleyBentonST-20BKStandardSeries.png',
+                    'HarleyBentonST-20BKStandardSeries2.png',
+                    'HarleyBentonST-20BKStandardSeries3.png',
+                    'HarleyBentonST-20BKStandardSeries4.png',
+                    'HarleyBentonST-20BKStandardSeries5.png'
+                ]
+            ],
+            
+            [
+                'libelleCourt' => 'Fender CC-60SCE Nat WN',
+                'prix' => 259,
+                'rubrique' => $sousRubriqueObjects['Guitares'], 
+                'marque' => 'Fender',
+                'libelleModele' => 'CC-60SCE Nat WN',
+                'caracteristique' => [
+                    'Design' => 'Classique',
+                    'Forme' => 'Concert',
+                    'Pan coupé' => 'Oui',
+                    'Table' => 'Epicéa massif',
+                    'Barrage' => 'En X sculpté (scallopé)',
+                    'Fond et éclisses' => 'Acajou',
+                    'Manche' => 'Acajou',
+                    'Touche' => 'Noyer',
+                    'Frettes' => '20',
+                    'Largeur au sillet' => '43 mm',
+                    'Diapason' => '643 mm',
+                    'Accastillage' => 'Chromé',
+                    'Electronique' => 'Fishman CD',
+                    'Couleur' => 'Naturel'
+                ],
+                'images' => [
+                    'FenderCC-60SCENatWN.png',
+                    'FenderCC-60SCENatWN2.png',
+                    'FenderCC-60SCENatWN3.png'
+                ]
+            ],
+
+            [
+                'libelleCourt' => 'Edgar Russ Ysaye Guarneri 1740',
+                'prix' => 36490,
+                'rubrique' => $sousRubriqueObjects['Violons'], 
+                'marque' => 'Edgar Russ',
+                'libelleModele' => 'Sound of Cremona',
+                'caracteristique' => [
+                    'Référencé depuis' => 'Mars 2024',
+                    'Numéro d\'article' => '586428',
+                    'Conditionnement (UVC)' => '1 Pièce(s)',
+                    'Archer inclus' => 'Non',
+                    'Étui inclus' => 'Non',
+                    'Touche' => 'Ebène',
+                    'Fabriqué sans bois tropicaux' => 'Non',
+                    'Dos flammé' => 'Oui',
+                    'Cordier avec vis d\'accordage fin' => 'Non',
+                    'Accordage fin pour corde de Mi' => 'Oui'
+                ],
+                'images' => [
+                    'EdgarRussYsayeGuarneri1740.png',
+                    'EdgarRussYsayeGuarneri17402.png',
+                    'EdgarRussYsayeGuarneri17403.png'
+                ]
+                ],
+
+                [
+                    'libelleCourt' => 'Millenium Focus 22 Drum Set Red',
+                    'prix' => 399,
+                    'rubrique' => $sousRubriqueObjects['Batteries'],
+                    'marque' => 'Millenium',
+                    'libelleModele' => 'Focus 22 Drum Set',
+                    'caracteristique' => [
+                        'Série' => 'Focus',
+                        'Adaptée pour' => 'Débutants ambitieux',
+                        'Grosse caisse' => '22\"x16\"',
+                        'Tom 1' => '10\"x08\"',
+                        'Tom 2' => '12\"x09\"',
+                        'Stand tom' => '16\"x14\"',
+                        'Caisse claire' => '14\"x5,5\" en bois',
+                        'Finition' => 'Rhodoïd',
+                        'Couleur' => 'Rouge',
+                        'Accessoires inclus' => 'Paire de baguettes',
+                        'Coussin atténuateur' => 'Pour grosse caisse',
+                        'Anneaux atténuateurs' => 'Pour toms et caisse claire',
+                        'Matériel fourni' => 'Pied droit de cymbale, Pédale de charleston, Pied de caisse claire, Pédale de grosse caisse, Supports de tom, Siège'
+                    ],
+                    'images' => [
+                        'MilleniumFocus22DrumSetRed.png',
+                        'MilleniumFocus22DrumSetRed2.png',
+                        'MilleniumFocus22DrumSetRed3.png'
+                    ]
+                    ],
+                    [
+                        'libelleCourt' => 'Yamaha YSL-356 G Bb/F-Trombone',
+                        'prix' => 1549,
+                        'rubrique' => $sousRubriqueObjects['Trombones'], 
+                        'marque' => 'Yamaha',
+                        'libelleModele' => 'YSL-356 G Bb/F-Trombone',
+                        'caracteristique' => [
+                            'Corps' => 'Laiton doré avec vernis doré',
+                            'Rotor' => 'De quarte standard',
+                            'Construction' => 'Closed Wrap',
+                            'Double perce' => '12,7 - 13,34 mm',
+                            'Diamètre du pavillon' => '204,4 mm',
+                            'Coulisse' => 'En maillechort',
+                            'Étui et embouchure' => 'Étui rigide et embouchure 48S incl.'
+                        ],
+                        'images' => [
+                            'YamahaYSL-356G Bb-F-Trombone.png',
+                            'YamahaYSL-356G Bb-F-Trombone2.png',
+                            'YamahaYSL-356G Bb-F-Trombone3.png'
+                        ]
+                        ],
+                        [
+                            'libelleCourt' => 'Muramatsu EX-III-RCE Flute',
+                            'prix' => 3499,
+                            'rubrique' => $sousRubriqueObjects['Flûtes'],
+                            'marque' => 'Muramatsu',
+                            'libelleModele' => 'EX-III-RCE',
+                            'caracteristique' => [
+                                'Type' => 'Flûte traversière',
+                                'Tête' => 'En argent massif',
+                                'Plateaux' => 'Creux',
+                                'Mi mécanique' => 'Oui',
+                                'Sol décalé' => 'Oui',
+                                'Corps et mécanique' => 'Argentés',
+                                'Accessoires' => 'Étui et écouvillon incl.'
+                            ],
+                            'images' => [
+                                'MuramatsuEX-III-RCEFlute.png',
+                                'MuramatsuEX-III-RCEFlute2.png',
+                                'MuramatsuEX-III-RCEFlute3.png'
+                            ]
+                            ],
+                            [
+                                'libelleCourt' => 'Arturia MicroFreak',
+                                'prix' => 266,
+                                'rubrique' => $sousRubriqueObjects['Synthétiseurs'],
+                                'marque' => 'Arturia',
+                                'libelleModele' => 'MicroFreak',
+                                'caracteristique' => [
+                                    'Touches' => '25 touches tactiles sensibles à la vélocité avec aftertouch polyphonique',
+                                    'Oscillateur' => 'Numérique avec des techniques telles que Karplus Strong, Harmonic OSC, Superwave et Texturer',
+                                    'Filtre' => 'Variable d\'état analogique (-12 dB / oct.) avec passe-bas, passe-bande, passe-haut',
+                                    'LFO' => '6 modes de vibration',
+                                    'Enveloppes' => '2 générateurs',
+                                    'Matrice de modulation' => '5 sources et 7 destinations',
+                                    'Arpégiateur' => 'Oui',
+                                    'Séquenceur' => 'Pas à pas avec 4 pistes d\'automation et paramètres aléatoires',
+                                    'Mode' => 'Paraphonique',
+                                    'Écran' => 'OLED',
+                                    'Sortie ligne' => 'Jack 6,3 mm',
+                                    'Sorties CV/Gate/Pressure' => 'Mini Jack 3,5 mm',
+                                    'Entrée/sortie Clock' => 'Mini Jack 3,5 mm',
+                                    'Entrée/sortie MIDI' => 'Mini Jack stéréo 3,5 mm',
+                                    'Port USB' => 'Oui',
+                                    'Dimensions' => '311 x 233 x 55 mm',
+                                    'Poids' => '1,02 kg',
+                                    'Bloc d\'alimentation' => '12V DC inclus',
+                                ],
+                                'images' => [
+                                    'ArturiaMicroFreak.png',
+                                    'ArturiaMicroFreak2.png',
+                                    'ArturiaMicroFreak3.png',
+                                ],
+                            ],
+                            
+
+            
         ];
-        
+
         foreach ($produits as $produitData) {
             $produit = new Produit();
             $produit->setLibelleCourt($produitData['libelleCourt']);
-            $produit->setDescriptionLong($faker->paragraph());
-            $produit->setPrixAchatHt($faker->randomFloat(2, 50, 1000));
+            $produit->setCaracteristiques($produitData['caracteristique']);
+            $produit->setPrixAchatHt($produitData['prix']);
             $produit->setMarque($produitData['marque']);
             $produit->setStockProduit($faker->numberBetween(0, 50));
-            $produit->setLibelleModele($faker->word());
+            $produit->setLibelleModele($produitData['libelleModele']);
             $produit->setRubrique($produitData['rubrique']);
             $produit->setFournisseur($faker->randomElement($fournisseurs));
-        
             $manager->persist($produit);
-        }
         
-        $produitRepository = $manager->getRepository(Produit::class);
-        $produits = $produitRepository->findAll();
-        
-        foreach ($produits as $produit) {
-            $nombreImages = $faker->numberBetween(1, 3);
-        
-            for ($i = 0; $i < $nombreImages; $i++) {
+            foreach ($produitData['images'] as $imagePath) {
                 $imageProduit = new ImageProduit();
-                $imageProduit->setLibelleImage($faker->unique()->lexify('image-?????.jpg'));
-                $imageProduit->setProduit($produit);
-                $manager->persist($imageProduit);
+                
+                // Vérifiez ici si $imagePath est valide
+                if (is_string($imagePath)) {
+                    $imageProduit->setLibelleImage($imagePath);
+                    $imageProduit->setProduit($produit);
+                    $manager->persist($imageProduit);
+                } else {
+                    throw new \Exception("Chemin d'image invalide : " . print_r($imagePath, true));
+                }
             }
         }
-
-
-
-
+        
         $manager->flush();
+
     }
 }

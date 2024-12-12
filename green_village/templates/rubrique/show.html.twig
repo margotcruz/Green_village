@@ -1,30 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Catalogue des Produits{%
+endblock %} {% block body %}
+<div class="container mt-4">
+  <h1 class="text-center mb-4">
+    Catalogue des Produits - {{ rubrique.labelRubrique }}
+  </h1>
 
-{% block title %}Rubrique{% endblock %}
-
-{% block body %}
-    <h1>Rubrique</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ rubrique.id }}</td>
-            </tr>
-            <tr>
-                <th>LibelleImage</th>
-                <td>{{ rubrique.libelleImage }}</td>
-            </tr>
-            <tr>
-                <th>LabelRubrique</th>
-                <td>{{ rubrique.labelRubrique }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_rubrique_index') }}">back to list</a>
-
-    <a href="{{ path('app_rubrique_edit', {'id': rubrique.id}) }}">edit</a>
-
-    {{ include('rubrique/_delete_form.html.twig') }}
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <h2 class="rubrique-title">{{ rubrique.labelRubrique }}</h2>
+      <div class="row">
+        {% set produits = produits %} {% if produits is not empty %} {% for produit in produits %}
+        <div class="col-md-4 mb-4">
+            <div class="card product-card shadow-sm h-100">
+                {% if produit.images|length > 0 %}
+                    <img src="{{ asset('images/produits/' ~ produit.images[0]) }}" class="card-img-top" alt="{{ produit.libelleCourt }}">
+                {% else %}
+                    <p> Aucune image du produit </p>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ produit.libelleCourt }}</h5>
+                    {% if produit.caracteristiqueProduit is defined and produit.caracteristiqueProduit|length > 0 %}
+                        <p class="card-text">{{ produit.caracteristiqueProduit|slice(0, 100) ~ '...' }}</p>
+                    {% endif %}
+                    <p class="card-text"><strong>Prix: </strong>{{ produit.prixAchatHt|number_format(2, '.', ',') }} €</p>
+                    <a href="{{ path('app_produit_show', { id: produit.idProduit }) }}" class="btn btn-primary">Voir Détails</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+     {% else %}
+        <div class="col-12">
+          <div class="alert alert-info" role="alert">
+            Aucun produit trouvé dans cette rubrique.
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

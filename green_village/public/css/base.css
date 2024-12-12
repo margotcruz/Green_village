@@ -1,0 +1,210 @@
+body {
+  background-color: #f5efe6; /* Fond beige clair */
+  color: #6A645A; /* Texte gris foncé */
+}
+
+.icon-link svg {
+  fill: url(#gradient);
+  transition: transform 0.3s ease;
+}
+
+.icon-link:hover svg {
+  transform: scale(1.2);
+}
+
+.navbar {
+  padding: 10px 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #D5CABC; /* Fond beige doux */
+}
+
+.navbar .navTitre {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #BDA18A; /* Couleur marron clair */
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.searchNav {
+  gap: 10px;
+}
+
+.buttonSearch {
+  background: #fff; /* Fond blanc */
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonSearch:hover {
+  background: #BDA18A; /* Couleur marron clair au survol */
+  color: #fff; /* Texte blanc au survol */
+}
+
+.footer {
+  background-color: #222; /* Fond sombre pour le footer */
+  color: #E8D5CC; /* Texte clair */
+}
+
+.footer-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: #E8D5CC; /* Liens en clair */
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #BDA18A; /* Couleur marron clair au survol */
+}
+
+.footer h5 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff; /* Couleur blanche pour les titres */
+}
+
+.footer form .form-control {
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #D5CABC; /* Fond beige doux */
+}
+
+.footer form .btn {
+  background-color: #BDA18A; /* Couleur marron clair */
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.footer form .btn:hover {
+  background-color: #C49D83; /* Couleur marron doux au survol */
+}
+
+.footer hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer .fi {
+  font-size: 24px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer .fi:hover {
+  transform: scale(1.2);
+  color: #BDA18A; /* Couleur marron clair au survol */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: -1% !important;
+  left: 0% !important;
+  width: 100%;
+  background-color: #fff; /* Fond blanc pour le menu déroulant */
+  border: none;
+  border-radius: 0%;
+}
+
+.custom-menu {
+  width: 25rem;
+  height: auto;
+  border-right: 1px #BDA18A solid; /* Bordure marron clair */
+  padding-right: 5%;
+  padding-left: 5%;
+  padding-bottom: 5%;
+  border-collapse: collapse;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.dropdown-toggle::after {
+  visibility: hidden;
+}
+
+.btn {
+  padding: 0%;
+}
+
+.dropdown-menu {
+  position: absolute !important;
+  top: -2px !important; /* Positionne le menu juste en dessous du bouton */
+  left: 0 !important;
+  width: 100%; /* Prend toute la largeur */
+  background-color: #f5efe6; /* Fond beige clair */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  z-index: 1000; /* Assure que le menu est au-dessus des autres éléments */
+  display: none; /* Masqué par défaut */
+
+}
+
+.dropdown-menu.show {
+  display: block; /* Affiche le menu lorsqu'il est actif */
+}
+
+.mega-menu {
+  padding: 20px; /* Espacement interne */
+}
+
+.mega-menu-column {
+  flex: 1; /* Chaque colonne prend une part égale de l'espace */
+  margin: 0 10px; /* Espacement entre les colonnes */
+}
+
+.nav-header {
+  font-size: 1.2rem; /* Taille de police pour les titres */
+  font-weight: bold; /* Gras pour les titres */
+  color: #BDA18A; /* Couleur marron clair */
+  margin-bottom: 10px; /* Espacement en bas */
+}
+
+.dropdown-link {
+  text-decoration: none; /* Pas de soulignement */
+  color: #6A645A; /* Couleur gris foncé */
+  padding: 8px 12px; /* Espacement interne pour les liens */
+  display: block; /* Permet de cliquer sur toute la zone */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transition douce */
+}
+
+.dropdown-link:hover {
+  background-color: #D5CABC; /* Fond beige doux au survol */
+  color: #C49D83; /* Couleur marron doux au survol */
+}
+
+.custom-menu {
+  list-style: none; /* Supprime les puces */
+  padding: 0; /* Supprime le padding par défaut */
+  margin: 0; /* Supprime la marge par défaut */
+}
+
+.mega-menu-column ul {
+  padding: 0; /* Supprime le padding par défaut des listes */
+}
+
+.mega-menu-column li {
+  margin-bottom: 5px; /* Espacement entre les éléments de la liste */
+  list-style: none;
+}
+
+@media (max-width: 768px) {
+  .mega-menu {
+    flex-direction: column; /* Colonne sur les petits écrans */
+  }
+}
+
+.img-index {
+  width: -webkit-fill-available;
+}

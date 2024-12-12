@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\ImageProduit;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\Collection;
 
+#[ApiResource]
 #[ORM\Entity]
 #[ORM\Table(name: 'produit')]
 class Produit
@@ -15,9 +19,6 @@ class Produit
 
     #[ORM\Column(type: 'string', length: 50, name: 'libelle_court')]
     private string $libelleCourt;
-
-    #[ORM\Column(type: 'string', length: 255, name: 'description_long')]
-    private string $descriptionLong;
 
     #[ORM\Column(type: 'decimal', precision: 15, scale: 2, name: 'prix_achat_ht')]
     private float $prixAchatHt;
@@ -42,10 +43,43 @@ class Produit
     #[ORM\JoinColumn(name: 'Id_rubrique', referencedColumnName: 'Id_rubrique')]
     private ?Rubrique $rubrique = null;
 
+
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ImageProduit::class)]
+    private $images;
+
+    #[ORM\Column]
+    private array $caracteristiques = [];
+
+
+
+
+    public function getImages(): Collection
+{
+    return $this->images;
+}
+
+public function addImage(ImageProduit $image): self
+{
+    if (!$this->images->contains($image)) {
+        $this->images[] = $image;
+        $image->setProduit($this);
+    }
+
+    return $this;
+}
+
+    
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    public function setId(?int $id): self
+{
+    $this->id = $id;
+    return $this;
+}
+
 
     public function getLibelleCourt(): string
     {
@@ -55,17 +89,6 @@ class Produit
     public function setLibelleCourt(string $libelleCourt): self
     {
         $this->libelleCourt = $libelleCourt;
-        return $this;
-    }
-
-    public function getDescriptionLong(): string
-    {
-        return $this->descriptionLong;
-    }
-
-    public function setDescriptionLong(string $descriptionLong): self
-    {
-        $this->descriptionLong = $descriptionLong;
         return $this;
     }
 
@@ -156,5 +179,23 @@ class Produit
     {
         $this->rubrique = $rubrique;
         return $this;
+
     }
+
+    public function getCaracteristiques(): array
+    {
+        return $this->caracteristiques;
+    }
+
+    public function setCaracteristiques(array $caracteristiques): static
+    {
+        $this->caracteristiques = $caracteristiques;
+
+        return $this;
+    }
+
+ 
+        
+
+  
 }

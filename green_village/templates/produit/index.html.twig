@@ -1,47 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit index{% endblock %}
+{% block title %}Produits{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
+    <h1>Liste des Produits</h1>
 
-    <table class="table">
+    <div>
+        <form method="GET" action="{{ path('app_produit_index') }}">
+            <label for="marque">Filtrer par marque :</label>
+            <select name="marque" id="marque">
+                <option value="">-- Toutes les marques --</option>
+                {% for rubriqueId, produits in produitsParRubrique %}
+                    {% for produit in produits %}
+                        {% if produit.marqueProduit is not null %}
+                            <option value="{{ produit.marqueProduit }}" {% if produit.marqueProduit == app.request.query.get('marque') %}selected{% endif %}>
+                                {{ produit.marqueProduit }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </select>
+
+            <label for="rubrique">Filtrer par rubrique :</label>
+            <select name="rubrique" id="rubrique">
+                <option value="">-- Toutes les rubriques --</option>
+                {% for rubrique in rubriques %}
+                    {% if rubrique.parentRubrique is null %}
+                        <option disabled>{{ rubrique.labelRubrique }}</option> 
+                        {% for sousRubrique in rubriques %}
+                            {% if sousRubrique.parentRubrique and sousRubrique.parentRubrique.id == rubrique.id %}
+                                <option value="{{ sousRubrique.id }}" {% if sousRubrique.id == app.request.query.get('rubrique') %}selected{% endif %}>
+                                    -- {{ sousRubrique.labelRubrique }}
+                                </option> 
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <button type="submit">Appliquer les filtres</button>
+            <a href="{{ path('app_produit_index') }}" class="button-reset">Réinitialiser</a>
+        </form>
+    </div>
+
+    <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>LibelleCourt</th>
-                <th>DescriptionLong</th>
-                <th>PrixAchatHt</th>
-                <th>StatutProduit</th>
-                <th>StockProduit</th>
+                <th>Nom</th>
                 <th>Marque</th>
-                <th>LibelleModele</th>
-                <th>actions</th>
+                <th>Prix</th>
+                <th>Rubrique</th>
+                <th>Sous-rubrique</th>
+                <th>Image</th>
             </tr>
         </thead>
         <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.libelleCourt }}</td>
-                <td>{{ produit.descriptionLong }}</td>
-                <td>{{ produit.prixAchatHt }}</td>
-                <td>{{ produit.statutProduit ? 'Yes' : 'No' }}</td>
-                <td>{{ produit.stockProduit }}</td>
-                <td>{{ produit.marque }}</td>
-                <td>{{ produit.libelleModele }}</td>
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for rubriqueId, produits in produitsParRubrique %}
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.libelleCourt }}</td>
+                        <td>{{ produit.marqueProduit }}</td>
+                        <td>{{ produit.prixAchatHt }}</td>
+                        <td>{{ produit.rubrique }}</td>
+                        <td>{{ produit.sousRubrique }}</td>
+                        <td>
+                            {% if produit.libelleImage %}
+                                <img src="/images/produits/{{ produit.libelleImage }}" alt="{{ produit.libelleCourt }}" width="100">
+                            {% else %}
+                                Pas d'image disponible
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_produit_new') }}">Create new</a>
 {% endblock %}

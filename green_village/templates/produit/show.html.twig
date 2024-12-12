@@ -1,50 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}Détails du Produit - {{ produit.libelleCourt }}{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
+<div class="container product-page">
+    <!-- Titre du produit -->
+    <h1 class="product-title text-center">{{ produit.libelleCourt }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>LibelleCourt</th>
-                <td>{{ produit.libelleCourt }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionLong</th>
-                <td>{{ produit.descriptionLong }}</td>
-            </tr>
-            <tr>
-                <th>PrixAchatHt</th>
-                <td>{{ produit.prixAchatHt }}</td>
-            </tr>
-            <tr>
-                <th>StatutProduit</th>
-                <td>{{ produit.statutProduit ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>StockProduit</th>
-                <td>{{ produit.stockProduit }}</td>
-            </tr>
-            <tr>
-                <th>Marque</th>
-                <td>{{ produit.marque }}</td>
-            </tr>
-            <tr>
-                <th>LibelleModele</th>
-                <td>{{ produit.libelleModele }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Carousel d'images -->
+    <div class="product-slider">
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            {% for image in produit.images %}
+              <div class="carousel-item {{ loop.first ? 'active' : '' }}"> 
+                <img src="{{ asset('images/produits/' ~ image.libelleImage) }}" alt="Produit {{ loop.index0 + 1 }}" class="d-block w-100">
+              </div>
+            {% endfor %}
+          </div>
+      
+          <!-- Contrôles du carousel -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      
+        <div class="clearfix">
+          <div id="thumbcarousel" class="carousel slide" data-bs-interval="false">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                {% for image in produit.images %}
+                  <div data-bs-target="#carousel" data-bs-slide-to="{{ loop.index0 }}" class="thumb">
+                    <img src="{{ asset('images/produits/' ~ image.libelleImage) }}" alt="Thumb {{ loop.index0 + 1 }}" class="d-block w-100">
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <!-- Contrôles des miniatures -->
+            <a class="carousel-control-prev" href="#thumbcarousel" role="button" data-bs-slide="prev">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a>
+            <a class="carousel-control-next" href="#thumbcarousel" role="button" data-bs-slide="next">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
 
-    <a href="{{ path('app_produit_index') }}">back to list</a>
+   <!-- Section des caractéristiques --> 
+<div class="product-details">
+    <h2>Caractéristiques</h2>
+    <div class="product-specifications">
+        <div class="spec-item">
+            <strong>Marque :</strong>
+            <span>{{ produit.marque }}</span>
+        </div>
+        <div class="spec-item">
+            <strong>Modèle :</strong>
+            <span>{{ produit.libelleModele }}</span>
+        </div>
+        <div class="spec-item">
+            <strong>Statut :</strong>
+            <span>{{ produit.statutProduit ? 'Disponible' : 'Non disponible' }}</span>
+        </div>
+        <div class="spec-item price-item">
+            <span class="price">{{ produit.prixAchatHt }} € HT</span>
+        </div>
+    </div>
 
-    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+  
+    {% if produit.caracteristiques is not empty %}
+    <h3>Spécifications supplémentaires</h3>
+    <ul class="additional-specifications">
+        {% for key, value in produit.caracteristiques %}
+            <li><strong>{{ key }} :</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucune caractéristique supplémentaire.</p>
+{% endif %}
 
-    {{ include('produit/_delete_form.html.twig') }}
+
+
+</div>
+
+<!-- Bouton retour -->
+<div class="product-navigation">
+    <a href="{{ path('app_produit_index') }}" class="btn btn-primary">Retour à la liste des produits</a>
+</div>
+</div>
+
 {% endblock %}
